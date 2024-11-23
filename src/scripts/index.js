@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
   app.renderPage();
 });
 
-// Close drawer when clicking outside
+// Close drawer
 document.addEventListener('click', (event) => {
   const drawer = document.querySelector('#navigationDrawer');
   const hamburger = document.querySelector('#hamburgerButton');
