@@ -1,0 +1,32 @@
+{
+    "topPicks": [
+      {
+        "id": "tp-1",
+        "name": "The Gourmet Kitchen",
+        "pictureId": "https://restaurant-api.dicoding.dev/images/medium/41",
+        "city": "Jakarta",
+        "rating": 4.8
+      },
+      {
+        "id": "tp-2",
+        "name": "Seaside Bistro",
+        "pictureId": "https://restaurant-api.dicoding.dev/images/medium/07",
+        "city": "Bali",
+        "rating": 4.7
+      },
+      {
+        "id": "tp-3",
+        "name": "Mountain View Cafe",
+        "pictureId": "https://restaurant-api.dicoding.dev/images/medium/35",
+        "city": "Bandung",
+        "rating": 4.9
+      },
+      {
+        "id": "tp-4",
+        "name": "Urban Plates",
+        "pictureId": "https://restaurant-api.dicoding.dev/images/medium/22",
+        "city": "Surabaya",
+        "rating": 4.6
+      }
+    ]
+  }

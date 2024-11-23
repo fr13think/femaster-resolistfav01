@@ -1,4 +1,4 @@
-import { createRestaurantItem, createRestaurantDetail } from './restaurant-item';
+import { createRestaurantItem } from './restaurant-item';
 
 class App {
   constructor({ content, button, drawer }) {
@@ -31,9 +31,6 @@ class App {
     if (url === '') {
       heroElement.style.display = 'block';
       this._renderHomePage();
-    } else if (url.startsWith('/detail/')) {
-      heroElement.style.display = 'none';
-      this._renderDetailPage(url.split('/')[2]);
     } else if (url === '/favorite') {
       heroElement.style.display = 'block';
       this._renderFavoritePage();
@@ -43,8 +40,10 @@ class App {
   async _renderHomePage() {
     try {
       this._content.innerHTML = '<div class="loading"></div>';
-      const restaurants = await this._fetchRestaurants();
-      const favoriteRestaurants = restaurants.filter(restaurant => restaurant.favorite);
+      const [restaurants, topPicks] = await Promise.all([
+        this._fetchRestaurants(),
+        this._fetchTopPicks()
+      ]);
       
       if (restaurants.length === 0) {
         this._content.innerHTML = `
@@ -58,7 +57,8 @@ class App {
 
       this._content.innerHTML = `
         <section class="content">
-          ${this._createFavoriteSection(favoriteRestaurants)}
+          ${this._createTopPicksSection(topPicks)}
+          ${this._createDynamicSwiper(restaurants)}
           
           <div class="content__header">
             <h2 class="content__title">Explore All Restaurants</h2>
@@ -71,7 +71,8 @@ class App {
         </section>
       `;
 
-      this._initializeFavoriteButtons();
+      // Initialize Swiper
+      this._initializeSwiper();
     } catch (error) {
       this._content.innerHTML = `
         <div class="error">
@@ -82,19 +83,33 @@ class App {
     }
   }
 
-  _createFavoriteSection(favoriteRestaurants) {
-    if (favoriteRestaurants.length === 0) return '';
+  _renderFavoritePage() {
+    this._content.innerHTML = `
+      <section class="content">
+        <div class="content__header">
+          <h2 class="content__title">Your Favorite Restaurants</h2>
+        </div>
+        <div class="coming-soon">
+          <i class="fa fa-clock-o"></i>
+          <h3>Coming Soon!</h3>
+          <p>We're working hard to bring you this feature.</p>
+        </div>
+      </section>
+    `;
+  }
 
-    const favoriteList = favoriteRestaurants
+  _createTopPicksSection(topPicks) {
+    const topPicksList = topPicks
       .map(restaurant => `
         <div class="favorite-item">
           <div class="favorite-item__info">
-            <h3><i class="fa fa-map-marker"></i> ${restaurant.city}</h3>
-            <p>${restaurant.name}</p>
+            <h3>${restaurant.name}</h3>
+            <p><i class="fa fa-map-marker"></i> ${restaurant.city}</p>
+            <div class="favorite-item__rating">
+              <i class="fa fa-star"></i>
+              <span>${restaurant.rating}</span>
+            </div>
           </div>
-          <a href="#/detail/${restaurant.id}" class="favorite-item__map-btn" aria-label="View restaurant details">
-            <i class="fa fa-map"></i> View Detail
-          </a>
         </div>
       `)
       .join('');
@@ -102,85 +117,69 @@ class App {
     return `
       <div class="favorite-section">
         <div class="content__header">
-          <h2 class="content__title">Popular Restaurant in Citites</h2>
+          <h2 class="content__title">Top Picks For You</h2>
         </div>
         <div class="favorite-list">
-          ${favoriteList}
+          ${topPicksList}
         </div>
       </div>
     `;
   }
 
-  async _renderDetailPage(id) {
-    try {
-      this._content.innerHTML = '<div class="loading"></div>';
-      const restaurants = await this._fetchRestaurants();
-      const restaurant = restaurants.find(r => r.id === id);
-
-      if (!restaurant) {
-        this._content.innerHTML = `
-          <div class="error">
-            <h2>Restaurant not found</h2>
-            <p>The restaurant you're looking for doesn't exist</p>
+  _createDynamicSwiper(restaurants) {
+    const slides = restaurants
+      .map(restaurant => `
+        <div class="swiper-slide">
+          <div class="swiper-restaurant">
+            <img src="${restaurant.pictureId}" alt="${restaurant.name}">
+            <div class="swiper-restaurant__info">
+              <h3>${restaurant.name}</h3>
+            </div>
           </div>
-        `;
-        return;
-      }
-
-      this._content.innerHTML = createRestaurantDetail(restaurant);
-    } catch (error) {
-      this._content.innerHTML = `
-        <div class="error">
-          <h2>Error loading restaurant detail</h2>
-          <p>${error.message}</p>
         </div>
-      `;
-    }
+      `)
+      .join('');
+
+    return `
+      <div class="dynamic-swiper">
+        <div class="content__header">
+          <h2 class="content__title">Popular Restaurants</h2>
+        </div>
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            ${slides}
+          </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+    `;
   }
 
-  async _renderFavoritePage() {
-    try {
-      this._content.innerHTML = '<div class="loading"></div>';
-      const restaurants = await this._fetchRestaurants();
-      const favoriteRestaurants = restaurants.filter(restaurant => restaurant.favorite);
-
-      if (favoriteRestaurants.length === 0) {
-        this._content.innerHTML = `
-          <section class="content">
-            <div class="content__header">
-              <h2 class="content__title">Your Favorite Restaurants</h2>
-            </div>
-            <div class="error">
-              <h2>No favorites yet</h2>
-              <p>Start adding restaurants to your favorites!</p>
-            </div>
-          </section>
-        `;
-        return;
+  _initializeSwiper() {
+    new Swiper('.swiper', {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        }
       }
-
-      this._content.innerHTML = `
-        <section class="content">
-          <div class="content__header">
-            <h2 class="content__title">Your Favorite Restaurants</h2>
-          </div>
-          <div class="restaurants">
-            ${favoriteRestaurants.map((restaurant) => 
-              createRestaurantItem(restaurant)
-            ).join('')}
-          </div>
-        </section>
-      `;
-
-      this._initializeFavoriteButtons();
-    } catch (error) {
-      this._content.innerHTML = `
-        <div class="error">
-          <h2>Error loading favorite restaurants</h2>
-          <p>${error.message}</p>
-        </div>
-      `;
-    }
+    });
   }
 
   async _fetchRestaurants() {
@@ -193,29 +192,14 @@ class App {
     }
   }
 
-  async _toggleFavorite(id) {
+  async _fetchTopPicks() {
     try {
-      const restaurants = await this._fetchRestaurants();
-      const restaurant = restaurants.find(r => r.id === id);
-      if (restaurant) {
-        restaurant.favorite = !restaurant.favorite;
-        // In a real application, you would update this to the server
-        this.renderPage(); // Re-render the current page
-      }
+      const response = await fetch('./data/top-picks.json');
+      const data = await response.json();
+      return data.topPicks;
     } catch (error) {
-      console.error('Error toggling favorite:', error);
+      throw new Error('Failed to fetch top picks');
     }
-  }
-
-  _initializeFavoriteButtons() {
-    const favoriteButtons = document.querySelectorAll('.favorite-btn');
-    favoriteButtons.forEach((button) => {
-      const restaurantId = button.dataset.id;
-      button.addEventListener('click', async (event) => {
-        event.stopPropagation();
-        await this._toggleFavorite(restaurantId);
-      });
-    });
   }
 }
 
