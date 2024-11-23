@@ -1,0 +1,121 @@
+@use 'variables' as v;
+
+// Responsive breakpoints
+@mixin mobile {
+  @media screen and (max-width: #{v.$breakpoint-tablet - 1}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: #{v.$breakpoint-tablet}) and (max-width: #{v.$breakpoint-desktop - 1}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: #{v.$breakpoint-desktop}) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
+  @media screen and (min-width: #{v.$breakpoint-large}) {
+    @content;
+  }
+}
+
+// Flexbox utilities
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Container
+@mixin container {
+  max-width: v.$container-max-width;
+  margin: 0 auto;
+  padding: 0 v.$container-padding;
+}
+
+// Typography
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Interactive elements
+@mixin touch-target {
+  min-width: v.$touch-target-size;
+  min-height: v.$touch-target-size;
+  padding: v.$spacing-small;
+}
+
+@mixin focus-outline {
+  outline: 3px solid v.$secondary-color;
+  outline-offset: 2px;
+}
+
+// Cards
+@mixin card {
+  background-color: v.$white;
+  border-radius: v.$border-radius-base;
+  box-shadow: v.$box-shadow-base;
+  overflow: hidden;
+}
+
+// Image handling
+@mixin responsive-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+// Animation
+@mixin fade-in {
+  animation: fadeIn 0.3s ease-in;
+  
+  @keyframes fadeIn {
+    from { 
+      opacity: 0; 
+    }
+    to { 
+      opacity: 1; 
+    }
+  }
+}
+
+@mixin slide-up {
+  animation: slideUp 0.3s ease-out;
+  
+  @keyframes slideUp {
+    from { 
+      transform: translateY(20px); 
+      opacity: 0; 
+    }
+    to { 
+      transform: translateY(0); 
+      opacity: 1; 
+    }
+  }
+}

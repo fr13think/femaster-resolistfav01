@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover great restaurants near you">
+    <title>Restolist Favorite</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <a href="#mainContent" class="skip-link">Skip to content</a>
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                <h1>Restolist <span>Favorite</span></h1>
+            </div>
+            <button id="hamburgerButton" class="header__menu" aria-label="navigation menu">☰</button>
+            <nav id="navigationDrawer" class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="/">Home</a></li>
+                    <li class="nav__item"><a href="#/favorite">Favorite</a></li>
+                    <li class="nav__item"><a href="https://github.com/fr13think/">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="hero__inner">
+            <picture>
+                <source media="(max-width: 600px)" srcset="/images/heros/hero-image_1.jpg">
+                <img src="/images/heros/hero-image_2.jpg" 
+                     alt="Restaurant atmosphere"
+                     class="hero__image">
+            </picture>
+            <div class="hero__content">
+                <h2>Find Your Perfect Dining Experience</h2>
+                <p>Discover the best restaurants in your area</p>
+            </div>
+        </div>
+    </div>
+
+    <main id="mainContent" class="main">
+        <section class="content">
+            <div class="content__header">
+                <h2 class="content__title">Explore Restaurants</h2>
+            </div>
+            <div id="restaurants" class="restaurants">
+                <!-- Restaurant items will be inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__content">
+            <p>Copyright © 2024 - Yudha Elfransyah</p>
+        </div>
+    </footer>
+</body>
+</html>

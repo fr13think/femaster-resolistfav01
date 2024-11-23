@@ -1,0 +1,58 @@
+// Colors
+$primary-color: #2c3e50;
+$secondary-color: #ad6800;
+$text-color: #333;
+$text-light: #666;
+$white: #fff;
+$black: #000;
+$gray-light: #f9f9f9;
+$gray: #eee;
+
+// Typography
+$font-family-primary: 'Poppins', sans-serif;
+$font-size-base: 14px;
+$font-size-small: 12px;
+$font-size-large: 16px;
+$font-size-xlarge: 20px;
+$font-size-xxlarge: 30px;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-small: 8px;
+$spacing-base: 16px;
+$spacing-large: 24px;
+$spacing-xlarge: 32px;
+$spacing-xxlarge: 48px;
+
+// Breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-large: 1200px;
+
+// Border Radius
+$border-radius-small: 4px;
+$border-radius-base: 8px;
+$border-radius-large: 16px;
+
+// Box Shadow
+$box-shadow-base: 0 2px 4px rgba($black, 0.1);
+$box-shadow-medium: 0 4px 8px rgba($black, 0.1);
+$box-shadow-large: 0 8px 16px rgba($black, 0.1);
+
+// Z-index
+$z-index-header: 100;
+$z-index-modal: 200;
+$z-index-drawer: 150;
+
+// Transitions
+$transition-base: all 0.3s ease;
+$transition-fast: all 0.2s ease;
+$transition-slow: all 0.4s ease;
+
+// Container
+$container-max-width: 1200px;
+$container-padding: $spacing-base;
+
+// Touch Target
+$touch-target-size: 44px;

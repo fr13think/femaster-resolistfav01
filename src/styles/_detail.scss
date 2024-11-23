@@ -1,0 +1,138 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.restaurant-detail {
+  @include m.container;
+  padding-top: v.$spacing-xxlarge;
+  padding-bottom: v.$spacing-xxlarge;
+
+  &__header {
+    margin-bottom: v.$spacing-xlarge;
+    @include m.card;
+    overflow: hidden;
+
+    @include m.tablet {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: v.$spacing-xlarge;
+    }
+  }
+
+  &__image {
+    @include m.responsive-image;
+    height: 300px;
+
+    @include m.tablet {
+      height: 100%;
+    }
+  }
+
+  &__info {
+    padding: v.$spacing-xlarge;
+
+    h2 {
+      margin: 0;
+      margin-bottom: v.$spacing-base;
+      color: v.$primary-color;
+      font-size: v.$font-size-xxlarge;
+    }
+  }
+
+  &__city {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-small;
+    margin-bottom: v.$spacing-base;
+    color: v.$text-light;
+
+    i {
+      color: v.$secondary-color;
+    }
+  }
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-small;
+    font-size: v.$font-size-large;
+
+    i {
+      color: gold;
+    }
+  }
+
+  &__content {
+    @include m.card;
+    padding: v.$spacing-xlarge;
+
+    h3 {
+      color: v.$primary-color;
+      margin: 0;
+      margin-bottom: v.$spacing-large;
+      font-size: v.$font-size-xlarge;
+    }
+  }
+
+  &__description {
+    margin-bottom: v.$spacing-xxlarge;
+
+    p {
+      line-height: 1.8;
+      color: v.$text-color;
+      margin: 0;
+    }
+  }
+
+  &__reviews {
+    .reviews {
+      display: grid;
+      gap: v.$spacing-large;
+
+      @include m.tablet {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+.review {
+  @include m.card;
+  padding: v.$spacing-large;
+  transition: v.$transition-base;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  &__header {
+    @include m.flex-between;
+    margin-bottom: v.$spacing-base;
+  }
+
+  &__name {
+    font-weight: bold;
+    color: v.$primary-color;
+    margin: 0;
+  }
+
+  &__date {
+    color: v.$text-light;
+    font-size: v.$font-size-small;
+    margin: 0;
+  }
+
+  &__content {
+    color: v.$text-color;
+    line-height: 1.6;
+    margin: 0;
+    font-style: italic;
+  }
+
+  &--empty {
+    text-align: center;
+    color: v.$text-light;
+    font-style: italic;
+    padding: v.$spacing-xlarge;
+    background-color: v.$gray-light;
+  }
+}

@@ -1,0 +1,66 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.hero {
+    margin-top: 60px;
+    position: relative;
+    background-color: $gray-light;
+    
+    &__inner {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      
+      @include tablet {
+        height: 400px;
+      }
+      
+      @include large-desktop {
+        height: 500px;
+      }
+    }
+    
+    &__image {
+      @include responsive-image;
+      height: 100%;
+      filter: brightness(0.7);
+      
+      @include large-desktop {
+        min-width: 1000px;
+      }
+    }
+    
+    &__content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: $white;
+      width: 90%;
+      max-width: 600px;
+      @include fade-in;
+      
+      h2 {
+        font-size: $font-size-xxlarge;
+        margin: 0;
+        margin-bottom: $spacing-base;
+        text-shadow: 2px 2px 4px rgba($black, 0.3);
+        
+        @include tablet {
+          font-size: $font-size-xxlarge;
+        }
+      }
+      
+      p {
+        font-size: $font-size-base;
+        margin: 0;
+        text-shadow: 1px 1px 2px rgba($black, 0.3);
+        
+        @include tablet {
+          font-size: $font-size-large;
+        }
+      }
+    }
+  }

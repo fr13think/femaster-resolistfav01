@@ -1,0 +1,226 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.restaurants {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: v.$spacing-xlarge;
+  padding: v.$spacing-base;
+  
+  @include m.tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include m.desktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.restaurant-item {
+  @include m.card;
+  transition: v.$transition-base;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: v.$box-shadow-medium;
+  }
+  
+  &__header {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    
+    img {
+      @include m.responsive-image;
+      height: 100%;
+    }
+    
+    &__rating {
+      position: absolute;
+      bottom: v.$spacing-base;
+      left: 0;
+      background-color: rgba(v.$secondary-color, 0.9);
+      color: v.$white;
+      padding: v.$spacing-small v.$spacing-base;
+      border-radius: 0 v.$border-radius-base v.$border-radius-base 0;
+      font-weight: 500;
+      
+      i {
+        margin-right: v.$spacing-xs;
+      }
+    }
+  }
+  
+  &__content {
+    padding: v.$spacing-base;
+    
+    h3 {
+      margin: 0;
+      margin-bottom: v.$spacing-small;
+      
+      a {
+        @include m.touch-target;
+        color: v.$text-color;
+        text-decoration: none;
+        display: inline-block;
+        font-size: v.$font-size-large;
+        
+        &:hover {
+          color: v.$secondary-color;
+        }
+        
+        &:focus {
+          @include m.focus-outline;
+        }
+      }
+    }
+    
+    &__city {
+      color: v.$text-light;
+      margin: 0;
+      margin-bottom: v.$spacing-small;
+      font-size: v.$font-size-base;
+      
+      i {
+        margin-right: v.$spacing-xs;
+        color: v.$secondary-color;
+      }
+    }
+    
+    &__description {
+      margin: 0;
+      @include m.line-clamp(3);
+      color: v.$text-color;
+      line-height: 1.6;
+      font-size: v.$font-size-base;
+    }
+  }
+}
+
+// Favorite Section Styles
+.favorite-section {
+  margin-bottom: v.$spacing-xxlarge;
+}
+
+.favorite-list {
+  display: grid;
+  gap: v.$spacing-base;
+  
+  @include m.tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include m.desktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.favorite-item {
+  @include m.card;
+  padding: v.$spacing-base;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: v.$spacing-base;
+  
+  &__info {
+    h3 {
+      margin: 0;
+      margin-bottom: v.$spacing-small;
+      font-size: v.$font-size-large;
+      color: v.$primary-color;
+    }
+    
+    p {
+      margin: 0;
+      color: v.$text-light;
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-small;
+      font-size: v.$font-size-base;
+      
+      i {
+        color: v.$secondary-color;
+      }
+    }
+  }
+  
+  &__map-btn {
+    @include m.touch-target;
+    display: inline-flex;
+    align-items: center;
+    gap: v.$spacing-small;
+    text-decoration: none;
+    color: v.$white;
+    background-color: v.$secondary-color;
+    padding: v.$spacing-small v.$spacing-base;
+    border-radius: v.$border-radius-base;
+    font-size: v.$font-size-base;
+    transition: v.$transition-base;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+    
+    &:focus {
+      @include m.focus-outline;
+    }
+    
+    i {
+      font-size: v.$font-size-base;
+    }
+  }
+}
+
+.content {
+  @include m.container;
+  padding-top: v.$spacing-xxlarge;
+  padding-bottom: v.$spacing-xxlarge;
+  
+  &__header {
+    text-align: center;
+    margin-bottom: v.$spacing-xlarge;
+  }
+  
+  &__title {
+    font-size: v.$font-size-xlarge;
+    color: v.$primary-color;
+    margin: 0;
+  }
+}
+
+.favorite-btn {
+  @include m.touch-target;
+  position: absolute;
+  top: v.$spacing-base;
+  right: v.$spacing-base;
+  background: rgba(v.$white, 0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: v.$touch-target-size;
+  height: v.$touch-target-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: v.$transition-base;
+  
+  i {
+    color: v.$text-light;
+    font-size: v.$font-size-large;
+  }
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+  
+  &:focus {
+    @include m.focus-outline;
+  }
+  
+  &.active {
+    i {
+      color: v.$secondary-color;
+    }
+  }
+}

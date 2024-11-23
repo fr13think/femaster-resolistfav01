@@ -1,0 +1,127 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: v.$white;
+  box-shadow: v.$box-shadow-base;
+  z-index: v.$z-index-header;
+  
+  &__inner {
+    @include m.container;
+    @include m.flex-between;
+    height: 60px;
+  }
+  
+  &__logo {
+    h1 {
+      font-size: v.$font-size-large;
+      font-weight: 700;
+      margin: 0;
+      
+      span {
+        color: v.$secondary-color;
+      }
+    }
+  }
+  
+  &__menu {
+    @include m.touch-target;
+    display: none;
+    background: none;
+    border: none;
+    font-size: v.$font-size-xlarge;
+    cursor: pointer;
+    
+    @include m.mobile {
+      display: block;
+    }
+    
+    &:focus {
+      @include m.focus-outline;
+    }
+  }
+}
+
+.nav {
+  @include m.mobile {
+    position: fixed;
+    top: 60px;
+    left: -250px;
+    width: 250px;
+    height: calc(100vh - 60px);
+    background-color: v.$white;
+    box-shadow: v.$box-shadow-medium;
+    transition: v.$transition-base;
+    
+    &.open {
+      left: 0;
+    }
+  }
+  
+  &__list {
+    @include m.flex-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+    @include m.mobile {
+      @include m.flex-column;
+      padding: v.$spacing-base;
+    }
+  }
+  
+  &__item {
+    margin-left: v.$spacing-large;
+    
+    @include m.mobile {
+      margin: 0;
+      margin-bottom: v.$spacing-base;
+    }
+    
+    a {
+      @include m.touch-target;
+      text-decoration: none;
+      color: v.$text-color;
+      font-weight: 500;
+      display: inline-block;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: v.$secondary-color;
+        transition: v.$transition-fast;
+      }
+      
+      &:hover::after {
+        width: 100%;
+      }
+      
+      &:focus {
+        @include m.focus-outline;
+      }
+    }
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background-color: v.$secondary-color;
+  color: v.$white;
+  padding: v.$spacing-small;
+  z-index: v.$z-index-modal;
+  
+  &:focus {
+    top: 0;
+  }
+}
