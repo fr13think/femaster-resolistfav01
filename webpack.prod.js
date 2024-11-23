@@ -1,6 +1,5 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
-const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
@@ -22,13 +21,6 @@ module.exports = merge(common, {
     ],
   },
   optimization: {
-    minimizer: [
-      new ImageMinimizerPlugin({
-        minimizer: {
-          implementation: ImageMinimizerPlugin.squooshMinify,
-        },
-      }),
-    ],
     splitChunks: {
       chunks: 'all',
       minSize: 20000,

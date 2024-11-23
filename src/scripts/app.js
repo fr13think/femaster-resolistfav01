@@ -68,11 +68,15 @@ class App {
               createRestaurantItem(restaurant)
             ).join('')}
           </div>
+
+          ${this._createCarouselSection(restaurants)}
         </section>
       `;
 
-      // Initialize Swiper
-      this._initializeSwiper();
+      // Initialize swiper setelah content dirender
+      setTimeout(() => {
+        this._initializeSwiper();
+      }, 100);
     } catch (error) {
       this._content.innerHTML = `
         <div class="error">
@@ -157,29 +161,84 @@ class App {
     `;
   }
 
+  _createCarouselSection(restaurants) {
+    const testimonials = restaurants
+      .filter(restaurant => restaurant.comments && restaurant.comments.length > 0)
+      .map(restaurant => {
+        const latestComment = restaurant.comments[restaurant.comments.length - 1];
+        return `
+          <div class="testimonial-card">
+            <div class="testimonial-card__content">
+              <p class="testimonial-card__quote">${latestComment.content}</p>
+            </div>
+            <div class="testimonial-card__footer">
+              <div class="testimonial-card__user">
+                <div class="testimonial-card__avatar">
+                  <i class="fa fa-user-circle"></i>
+                </div>
+                <div class="testimonial-card__info">
+                  <p class="testimonial-card__name">${latestComment.user}</p>
+                  <p class="testimonial-card__date">${latestComment.date}</p>
+                </div>
+              </div>
+              <div class="testimonial-card__restaurant">
+                <div class="testimonial-card__restaurant-info">
+                  <p class="testimonial-card__restaurant-name">${restaurant.name}</p>
+                  <div class="testimonial-card__meta">
+                    <span class="testimonial-card__location">
+                      <i class="fa fa-map-marker"></i> ${restaurant.city}
+                    </span>
+                    <span class="testimonial-card__rating">
+                      <i class="fa fa-star"></i> ${restaurant.rating}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      })
+      .join('');
+
+    return `
+      <div class="testimonials-section">
+        <div class="content__header">
+          <h2 class="content__title">What Our Customers Say</h2>
+          <p class="content__subtitle">Real experiences from our valued customers</p>
+        </div>
+        <div class="testimonials-grid">
+          ${testimonials}
+        </div>
+      </div>
+    `;
+  }
+
   _initializeSwiper() {
-    new Swiper('.swiper', {
-      slidesPerView: 1,
-      spaceBetween: 10,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      breakpoints: {
-        640: {
-          slidesPerView: 2,
-          spaceBetween: 20,
+    const swiperElement = document.querySelector('.swiper');
+    if (swiperElement) {
+      new Swiper('.swiper', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
         },
-        1024: {
-          slidesPerView: 3,
-          spaceBetween: 30,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        breakpoints: {
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   async _fetchRestaurants() {

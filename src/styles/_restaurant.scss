@@ -144,32 +144,6 @@
       }
     }
   }
-  
-  &__map-btn {
-    @include m.touch-target;
-    display: inline-flex;
-    align-items: center;
-    gap: v.$spacing-small;
-    text-decoration: none;
-    color: v.$white;
-    background-color: v.$secondary-color;
-    padding: v.$spacing-small v.$spacing-base;
-    border-radius: v.$border-radius-base;
-    font-size: v.$font-size-base;
-    transition: v.$transition-base;
-    
-    &:hover {
-      transform: translateY(-2px);
-    }
-    
-    &:focus {
-      @include m.focus-outline;
-    }
-    
-    i {
-      font-size: v.$font-size-base;
-    }
-  }
 }
 
 .content {
@@ -186,6 +160,11 @@
     font-size: v.$font-size-xlarge;
     color: v.$primary-color;
     margin: 0;
+  }
+
+  &__subtitle {
+    color: v.$text-light;
+    margin-top: v.$spacing-small;
   }
 }
 
@@ -262,33 +241,184 @@
 .swiper-button-next,
 .swiper-button-prev {
   color: v.$secondary-color;
-  
-  &:after {
-    font-size: v.$font-size-xlarge;
-  }
+  font-size: v.$font-size-xlarge;
 }
-
 .swiper-pagination-bullet-active {
-  background-color: v.$secondary-color;
+background-color: v.$secondary-color;
 }
 
 // Coming Soon Styles
 .coming-soon {
+text-align: center;
+padding: v.$spacing-xxlarge 0;
+
+i {
+  font-size: 48px;
+  color: v.$secondary-color;
+  margin-bottom: v.$spacing-base;
+}
+
+h3 {
+  color: v.$primary-color;
+  margin-bottom: v.$spacing-base;
+}
+
+p {
+  color: v.$text-light;
+}
+}
+
+// Testimonials Section Styles
+.testimonials-section {
+margin-top: v.$spacing-xxlarge;
+padding: v.$spacing-xxlarge 0;
+background-color: v.$gray-light;
+
+.content__subtitle {
   text-align: center;
-  padding: v.$spacing-xxlarge 0;
+  color: v.$text-light;
+  margin-top: v.$spacing-small;
+}
+}
+
+.testimonials-grid {
+display: grid;
+gap: v.$spacing-large;
+padding: v.$spacing-base;
+max-width: 1400px;
+margin: 0 auto;
+
+@include m.tablet {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@include m.desktop {
+  grid-template-columns: repeat(3, 1fr);
+}
+}
+
+.testimonial-card {
+@include m.card;
+padding: v.$spacing-large;
+transition: v.$transition-base;
+display: flex;
+flex-direction: column;
+background-color: v.$white;
+
+&:hover {
+  transform: translateY(-5px);
+  box-shadow: v.$box-shadow-medium;
+}
+
+&__content {
+  flex: 1;
+  margin-bottom: v.$spacing-large;
+  position: relative;
+  
+  &::before {
+    content: '\201C';
+    font-size: 4em;
+    color: v.$secondary-color;
+    opacity: 0.2;
+    position: absolute;
+    top: -20px;
+    left: -10px;
+  }
+}
+
+&__quote {
+  font-style: italic;
+  color: v.$text-color;
+  line-height: 1.6;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+&__footer {
+  border-top: 1px solid v.$gray;
+  padding-top: v.$spacing-base;
+}
+
+&__user {
+  display: flex;
+  align-items: center;
+  gap: v.$spacing-base;
+  margin-bottom: v.$spacing-base;
+}
+
+&__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: v.$gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   i {
-    font-size: 48px;
-    color: v.$secondary-color;
-    margin-bottom: v.$spacing-base;
-  }
-  
-  h3 {
-    color: v.$primary-color;
-    margin-bottom: v.$spacing-base;
-  }
-  
-  p {
+    font-size: v.$font-size-xlarge;
     color: v.$text-light;
   }
+}
+
+&__info {
+  flex: 1;
+}
+
+&__name {
+  font-weight: 600;
+  color: v.$primary-color;
+  margin-bottom: v.$spacing-xs;
+}
+
+&__date {
+  font-size: v.$font-size-small;
+  color: v.$text-light;
+}
+
+&__restaurant {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+&__restaurant-info {
+  flex: 1;
+}
+
+&__restaurant-name {
+  font-weight: 500;
+  color: v.$primary-color;
+  margin-bottom: v.$spacing-xs;
+}
+
+&__meta {
+  display: flex;
+  gap: v.$spacing-base;
+  font-size: v.$font-size-small;
+  color: v.$text-light;
+  
+  i {
+    margin-right: v.$spacing-xs;
+  }
+}
+
+&__location i {
+  color: v.$secondary-color;
+}
+
+&__rating i {
+  color: gold;
+}
+}
+
+// No Reviews Style
+.no-comment {
+text-align: center;
+color: v.$text-light;
+font-style: italic;
+padding: v.$spacing-base;
+background-color: v.$gray-light;
+border-radius: v.$border-radius-base;
 }
